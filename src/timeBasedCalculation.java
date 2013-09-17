@@ -444,96 +444,6 @@ public class timeBasedCalculation {
 			
 		}
 		//calculate the ET
-		double kc=b.Kc.get(this.district).get(b.Month.get(i-1));
-		double et=b.ET0.get(i-1);
-		this.ET.add(et*kc);
-		
-		//calculate SWC
-		
-		if(this.PERC.get(i-1)>0){
-			
-			this.SWC.add(i,SOIL.get("FC")*this.RD);
-		}else if(this.PERC.get(i-1)==0&&(this.SWC.get(i-1)-this.ET.get(i-1)+this.InF.get(i-1))<SOIL.get("WP")*this.RD*0.1){
-			
-			this.SWC.add(i,SOIL.get("WP")*this.RD*0.1);
-			
-			
-		}else{
-			
-			this.SWC.add(i,this.SWC.get(i-1)+this.InF.get(i-1)-this.ET.get(i-1));
-			
-		}
-		
-		
-		//calculate the water loss
-		this.Loss.add(i-1,Math.abs(this.Q.get(i-1)+this.PERC.get(i-1)-b.Rhr.get(i-1))*this.area);
-		this.PerLoss.add(i-1,Math.abs(this.Q.get(i-1)+this.PERC.get(i-1)-b.Rhr.get(i-1))/b.Ihr.get(i-1));
-		
-		
-	}
-public void calculationET(int i ){
-		
-		HashMap<String, Double> SOIL=b.soil.get(soilType);
-		
-		if(this.WB.get(i-1)>0){  //calculate the rate(f),Q and PERC
-			System.out.println(i);
-			double delta=SOIL.get("theta")-this.SWC.get(i-1)/this.RD;  //get the value of delta for equation 2
-			this.delta.add(i-1,delta);
-			double psi=SOIL.get("psi");		//get the psi property of the soil
-			double k=SOIL.get("K");			//get the K property of the soil
-			newtonMethod nm=new newtonMethod(psi,delta,k);	
-			//double F=0.0;
-			if(nm.calculationMethod()){
-				
-				double F=nm.getResult();			//get the value of F for equation 1
-				//System.out.println("F: "+F);
-				this.F.add(i-1,F);
-				
-			}else{
-				
-				System.out.println("error calculation for F");
-				
-			}
-			//calculation for the rate(f)
-			
-			double f=k*(1+(psi*delta/this.F.get(i-1)));
-			this.rateF.add(i-1,f);
-			
-			//calculation for the Q
-			if(this.WB.get(i-1)>f){
-				double Q=this.WB.get(i-1)-f*1;
-				this.Q.add(i-1,Q);
-				this.InF.add(i-1,f*1);	
-			}else{
-				
-				this.Q.add(i-1,0.0);
-				this.InF.add(this.WB.get(i-1));
-				
-			}
-			//calculation for the PERC
-			double perc=this.SWC.get(i-1)+this.InF.get(i-1)-SOIL.get("FC")*this.RD;
-			if(perc>0){
-				
-				this.PERC.add(perc);
-				
-			}else{
-				
-				this.PERC.add(0.0);
-			}
-			
-			
-			
-		}else{
-			this.delta.add(i-1,-1.0);		//we have no result for this property
-			this.F.add(i-1,-1.0);		//we have no result for this property
-			this.rateF.add(i-1,-1.0);		//we have no result for this property
-			this.Q.add(i-1,0.0);
-			this.PERC.add(i-1,0.0);
-			this.InF.add(i-1,0.0);
-			
-			
-		}
-		//calculate the ET
 		//double kc=b.Kc.get(this.district).get(b.Month.get(i-1));
 		//double et=b.ET0.get(i-1);
 		//this.ET.add(et*kc);
@@ -561,6 +471,7 @@ public void calculationET(int i ){
 		
 		
 	}
+
 	
 	public static void main(String args[]){
 		

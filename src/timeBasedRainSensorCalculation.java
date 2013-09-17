@@ -43,6 +43,12 @@ public class timeBasedRainSensorCalculation extends timeBasedCalculation{
 		
 		for(int i =this.getStartIrrigationHour();i<=this.getLastIrrigationHour();i++){
 			
+			//calculate the ET
+			double kc=b.Kc.get(this.getDistrict()).get(b.Month.get(i-1));
+			double et=b.ET0.get(i-1);
+			this.getET().add(et*kc);
+			
+			
 			if(i<24){
 				
 				this.rainSum.add(super.b.Rhr.get(i-1));

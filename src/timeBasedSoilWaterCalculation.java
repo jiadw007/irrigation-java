@@ -49,6 +49,12 @@ public class timeBasedSoilWaterCalculation extends timeBasedCalculation{
 		
 		for(int i =this.getStartIrrigationHour();i<=this.getLastIrrigationHour();i++){
 			
+			//calculate the ET
+			double kc=b.Kc.get(this.getDistrict()).get(b.Month.get(i-1));
+			double et=b.ET0.get(i-1);
+			this.getET().add(et*kc);
+			
+			
 			//calculation the Ihrsoil
 			if(this.getSWC().get(i-1)>this.soilMoistureSensorThreshold*SOIL.get("FC")*this.getRD()){
 			

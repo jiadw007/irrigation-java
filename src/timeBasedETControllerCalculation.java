@@ -129,7 +129,7 @@ public class timeBasedETControllerCalculation extends timeBasedCalculation{
 			double wb=this.b.Rhr.get(i-1)+this.Ihret.get(i-1);
 			this.getWB().add(wb);
 			
-			super.calculationET(i);
+			super.calculation(i);
 				
 			
 		}
