@@ -82,12 +82,14 @@ public class timeBasedSoilWaterCalculation extends timeBasedCalculation{
 		try{
 			File csv=new File("soilwater-result.csv");
 			BufferedWriter bw=new BufferedWriter(new FileWriter(csv,false));
-			bw.write("hour"+","+"Rhr"+","+"Ihrsoil"+","+"ET0"+","+"ET"+","+"WB"+","+"SWC"+","+"DELTA"+","+"F"+","+"f"+","+"Q"+","+"InF"+","+"PERC"+","+"Loss"+","+"PerLoss"+","+"Ihr");
+			bw.write("hour"+","+"Rhr"+","+"Ihrsoil"+","+"ET0"+","+"ET"+","+"WB"+","+"SWC"+","+"DELTA"+","+"F"+","+"f"+","+"Q"+","+"InF"+","+"PERC"+","+"Loss"+","+"PerLoss"+","+"wLostHr"+","+
+					 "wLostDay"+","+"iLostHr"+","+"iLostDay"+","+"Ihr");
 			bw.newLine();
 			for(int i =0;i<this.Ihrsoil.size();i++){
 				
 				bw.write(this.b.Hour.get(i)+","+this.b.Rhr.get(i)+","+this.getIhrsoil().get(i)+","+b.ET0.get(i)+","+this.getET().get(i)+","+this.getWB().get(i)+","+this.getSWC().get(i+1)+","+this.getDelta().get(i)+","
-				        +this.getF().get(i)+","+this.getRateF().get(i)+","+this.getQ().get(i)+","+this.getInF().get(i)+","+this.getPERC().get(i)+","+this.getLoss().get(i)+","+this.getPerLoss().get(i)+","+this.b.Ihr.get(i));
+				        +this.getF().get(i)+","+this.getRateF().get(i)+","+this.getQ().get(i)+","+this.getInF().get(i)+","+this.getPERC().get(i)+","+this.getLoss().get(i)+","+this.getPerLoss().get(i)+","+this.b.Ihr.get(i)
+				        +","+this.getwLostHr().get(i)+","+this.getwLostDay().get(i)+","+this.getiLostHr().get(i)+","+this.getiLostDay().get(i));
 				bw.newLine();
 				
 			}

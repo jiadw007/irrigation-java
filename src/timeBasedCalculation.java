@@ -32,7 +32,10 @@ public class timeBasedCalculation {
 	private ArrayList<Double> InF;			//from calculation function 
 	private ArrayList<Double> Loss;			//from calculation function 
 	private ArrayList<Double> PerLoss;		//from calculation function 
-	
+	private ArrayList<Double> wLostHr;
+	private ArrayList<Double> wLostDay;
+	private ArrayList<Double> iLostHr;
+	private ArrayList<Double> iLostDay;
 	
 	
 	
@@ -201,6 +204,46 @@ public class timeBasedCalculation {
 	
 	
 
+	public ArrayList<Double> getwLostHr() {
+		return wLostHr;
+	}
+
+
+	public void setwLostHr(ArrayList<Double> wLostHr) {
+		this.wLostHr = wLostHr;
+	}
+
+
+	public ArrayList<Double> getwLostDay() {
+		return wLostDay;
+	}
+
+
+	public void setwLostDay(ArrayList<Double> wLostDay) {
+		this.wLostDay = wLostDay;
+	}
+
+
+	public ArrayList<Double> getiLostHr() {
+		return iLostHr;
+	}
+
+
+	public void setiLostHr(ArrayList<Double> iLostHr) {
+		this.iLostHr = iLostHr;
+	}
+
+
+	public ArrayList<Double> getiLostDay() {
+		return iLostDay;
+	}
+
+
+	public void setiLostDay(ArrayList<Double> iLostDay) {
+		this.iLostDay = iLostDay;
+	}
+
+
 	public timeBasedCalculation() {
 		b=new baseData();
 		WB=new ArrayList<Double>();
@@ -214,7 +257,10 @@ public class timeBasedCalculation {
 		InF=new ArrayList<Double>();			//from calculation function 
 		Loss=new ArrayList<Double>();			//from calculation function 
 		PerLoss=new ArrayList<Double>();		//from calculation function
-		
+		wLostHr=new ArrayList<Double>();
+		wLostDay=new ArrayList<Double>();
+		iLostHr=new ArrayList<Double>();
+		iLostDay=new ArrayList<Double>();
 		for(int i =0;i<b.Rhr.size();i++){
 			
 			double wb=b.Rhr.get(i)+b.Ihr.get(i);
@@ -244,6 +290,10 @@ public class timeBasedCalculation {
 		InF=new ArrayList<Double>();			//from calculation function 
 		Loss=new ArrayList<Double>();			//from calculation function 
 		PerLoss=new ArrayList<Double>();		//from calculation function
+		wLostHr=new ArrayList<Double>();
+		wLostDay=new ArrayList<Double>();
+		iLostHr=new ArrayList<Double>();
+		iLostDay=new ArrayList<Double>();
 		
 		for(int i =0;i<b.Rhr.size();i++){
 			
@@ -264,13 +314,16 @@ public class timeBasedCalculation {
 		try{
 			File csv=new File("time-base-result.csv");
 			BufferedWriter bw=new BufferedWriter(new FileWriter(csv,false));
-			bw.write("WB"+","+"ET0"+","+"SWC"+","+"ET"+","+"DELTA"+","+"F"+","+"f"+","+"PERC"+","+"Q"+","+"InF"+","+"Loss"+","+"PerLoss");
+			bw.write("hour"+","+"ET0"+","+"ET"+","+"WB"+","+"SWC"+","+"DELTA"+","+"F"+","+"f"+","+
+			         "Q"+","+"InF"+","+"PERC"+","+"Loss"+","+"PerLoss"+","+"Rhr"+","+"wLostHr"+","+
+					 "wLostDay"+","+"iLostHr"+","+"iLostDay");
 			bw.newLine();
 			for(int i =0;i<this.SWC.size()-1;i++){
 				
-				bw.write(this.WB.get(i)+","+b.ET0.get(i)+","+this.SWC.get(i+1)+","+this.ET.get(i)+","+this.delta.get(i)+","
-				        +this.F.get(i)+","+this.rateF.get(i)+","+this.PERC.get(i)+","+this.Q.get(i)+","
-				        +this.InF.get(i)+","+this.Loss.get(i)+","+this.PerLoss.get(i));
+				bw.write(this.b.Hour.get(i)+","+b.ET0.get(i)+","+this.ET.get(i)+","+this.WB.get(i)+","+this.SWC.get(i+1)+","+this.delta.get(i)+","
+				        +this.F.get(i)+","+this.rateF.get(i)+","+this.Q.get(i)+","
+				        +this.InF.get(i)+","+this.PERC.get(i)+","+this.Loss.get(i)+","+this.PerLoss.get(i)+","+this.b.Rhr.get(i)+","+this.wLostHr.get(i)+","
+				        +this.wLostDay.get(i)+","+this.iLostHr.get(i)+","+this.iLostDay.get(i));
 				bw.newLine();
 				
 			}
@@ -294,7 +347,7 @@ public class timeBasedCalculation {
 		for(int i=this.startIrrigationHour;i<=this.lastIrrigationHour;i++){
 			
 			if(this.WB.get(i-1)>0){  //calculate the rate(f),Q and PERC
-				System.out.println(i);
+				//System.out.println(i);
 				double delta=SOIL.get("theta")-this.SWC.get(i-1)/this.RD;  //get the value of delta for equation 2
 				this.delta.add(i-1,delta);
 				double psi=SOIL.get("psi");		//get the psi property of the soil
@@ -374,9 +427,62 @@ public class timeBasedCalculation {
 			
 			
 			//calculate the water loss
-			this.Loss.add(i-1,Math.abs(this.Q.get(i-1)+this.PERC.get(i-1)-b.Rhr.get(i-1))*this.area);
-			this.PerLoss.add(i-1,Math.abs(this.Q.get(i-1)+this.PERC.get(i-1)-b.Rhr.get(i-1))/b.Ihr.get(i-1));
+			double wloss=(this.Q.get(i-1)+this.PERC.get(i-1)-b.Rhr.get(i-1))*this.area;
+			this.Loss.add(i-1,Math.abs(wloss));
+			double iloss=(this.Q.get(i-1)+this.PERC.get(i-1)-this.b.Rhr.get(i-1))/this.b.Ihr.get(i-1);
+			this.PerLoss.add(i-1,Math.abs(iloss));
+			//caculate the wLostHr
+			if(wloss>0){
+				this.wLostHr.add(i-1,wloss);
+				
+			}else{
+				this.wLostHr.add(i-1, 0.0);
+			}
 			
+			
+			
+			//calculate the iLostHr
+			if(this.b.Ihr.get(i-1)>0){
+				
+				if(iloss>0){
+					
+					this.iLostHr.add(iloss);
+				}else{
+					
+					this.iLostHr.add(0.0);
+				}
+			}else{
+				this.iLostHr.add(0.0);
+			}
+			
+			//calculate the wLostDay and iLostDay
+			if(i>24){
+						
+				if(Integer.parseInt(this.b.Hour.get(i-1))==0){
+					this.wLostDay.add(0.0);
+					this.iLostDay.add(0.0);
+							
+				}else if(Integer.parseInt(this.b.Hour.get(i-1))%23==0){
+					System.out.println(i);		
+					double wsum=0;
+					double isum=0;
+					for(int j =i-23;j<=i;j++){
+								
+						wsum+=this.wLostHr.get(j-1);
+						isum+=this.iLostHr.get(j-1);
+					}
+					this.wLostDay.add(wsum);
+					this.iLostDay.add(isum);
+				}else{
+					this.wLostDay.add(0.0);
+					this.iLostDay.add(0.0);
+							
+				}
+						
+			}else{
+				this.wLostDay.add(0.0);
+				this.iLostDay.add(0.0);
+			}
 			
 		}
 		
@@ -386,7 +492,7 @@ public class timeBasedCalculation {
 		HashMap<String, Double> SOIL=b.soil.get(soilType);
 		
 		if(this.WB.get(i-1)>0){  //calculate the rate(f),Q and PERC
-			System.out.println(i);
+			//System.out.println(i);
 			double delta=SOIL.get("theta")-this.SWC.get(i-1)/this.RD;  //get the value of delta for equation 2
 			this.delta.add(i-1,delta);
 			double psi=SOIL.get("psi");		//get the psi property of the soil
@@ -466,9 +572,63 @@ public class timeBasedCalculation {
 		
 		
 		//calculate the water loss
-		this.Loss.add(i-1,Math.abs(this.Q.get(i-1)+this.PERC.get(i-1)-b.Rhr.get(i-1))*this.area);
-		this.PerLoss.add(i-1,Math.abs(this.Q.get(i-1)+this.PERC.get(i-1)-b.Rhr.get(i-1))/b.Ihr.get(i-1));
+		double wloss=(this.Q.get(i-1)+this.PERC.get(i-1)-b.Rhr.get(i-1))*this.area;
+		this.Loss.add(i-1,Math.abs(wloss));
+		double iloss=(this.Q.get(i-1)+this.PERC.get(i-1)-this.b.Rhr.get(i-1))/this.b.Ihr.get(i-1);
+		this.PerLoss.add(i-1,Math.abs(iloss));
 		
+		//caculate the wLostHr
+		if(wloss>0){
+			this.wLostHr.add(wloss);
+			
+		}else{
+			this.wLostHr.add(0.0);
+		}
+		
+		
+		
+		//calculate the iLostHr
+		if(this.b.Ihr.get(i-1)>0){
+			
+			if(iloss>0){
+				
+				this.iLostHr.add(iloss);
+			}else{
+				
+				this.iLostHr.add(0.0);
+			}
+		}else{
+			this.iLostHr.add(0.0);
+		}
+		
+		//calculate the wLostDay and iLostDay
+		if(i>24){
+					
+			if(Integer.parseInt(this.b.Hour.get(i-1))==0){
+				this.wLostDay.add(0.0);
+				this.iLostDay.add(0.0);
+						
+			}else if(Integer.parseInt(this.b.Hour.get(i-1))%23==0){
+						
+				double wsum=0;
+				double isum=0;
+				for(int j =i-23;j<=i;j++){
+							
+					wsum+=this.wLostHr.get(j-1);
+					isum+=this.iLostHr.get(j-1);
+				}
+				this.wLostDay.add(wsum);
+				this.iLostDay.add(isum);
+			}else{
+				this.wLostDay.add(0.0);
+				this.iLostDay.add(0.0);
+						
+			}
+					
+		}else{
+			this.wLostDay.add(0.0);
+			this.iLostDay.add(0.0);
+		}
 		
 	}
 
@@ -477,6 +637,8 @@ public class timeBasedCalculation {
 		
 		timeBasedCalculation tc=new timeBasedCalculation();
 		tc.calculation();
+		//System.out.println(tc.getiLostDay().size());
+		//System.out.println(tc.getSWC().size()-1);
 		tc.writeDataToFile();
 		
 	}

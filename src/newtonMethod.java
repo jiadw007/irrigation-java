@@ -56,7 +56,7 @@ public class newtonMethod {
             if(Math.abs(x1-x0)<precision && Math.abs(func(x1))<precision)                                               //达到预设的结束条件   
             {  
                 this.setResult(x1);                            //x[0] is the result
-                System.out.println("root is :"+this.result);
+                //System.out.println("root is :"+this.result);
                 return true;  
             }  
             else                                    //if it does not satisfy the precision condition

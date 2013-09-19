@@ -143,7 +143,10 @@ public class timeBasedETControllerCalculation extends timeBasedCalculation{
 		try{
 			File csv=new File("ETContorller-result.csv");
 			BufferedWriter bw=new BufferedWriter(new FileWriter(csv,false));
-			bw.write("hour"+","+"Rhr"+","+"Re"+","+"IhrSchedule"+","+"Ick1"+","+"Ick2"+","+"SWC"+","+"ET"+","+"AWRstep1"+","+"AWRstep2"+","+"AWR");
+			bw.write("hour"+","+"Rhr"+","+"Re"+","+"IhrSchedule"+","+"Ick1"+","+"Ick2"+","+"SWC"+","+"ET"+","+"AWRstep1"+","+"AWRstep2"+","+"AWR"+
+					 ","+"Ihret"+","+"WB"+","+"delta"+","+"F"+","+"f"+","+
+			         "Q"+","+"InF"+","+"PERC"+","+"wLostHr"+","+
+					 "wLostDay"+","+"iLostHr"+","+"iLostDay");
 			bw.newLine();
 			for(int i =0;i<this.AWRstep1.size();i++){
 				

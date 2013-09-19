@@ -1,4 +1,4 @@
-hour,Rhr,Re,IhrSchedule,Ick1,Ick2,SWC,ET,AWRstep1,AWRstep2,AWR
+hour,Rhr,Re,IhrSchedule,Ick1,Ick2,SWC,ET,AWRstep1,AWRstep2,AWR,Ihret,WB,delta,F,f,Q,InF,PERC,wLostHr,wLostDay,iLostHr,iLostDay
 0,0.0,0.0,0,0,0,0.9144,0.0,0.0,1,0.0
 1,0.0,0.0,0,0,0,0.9144,0.0,0.0,1,0.0
 2,0.0,0.0,0,0,0,0.9144,0.0,0.0,1,0.0
