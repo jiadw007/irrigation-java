@@ -20,7 +20,7 @@ public class timeBasedCalculation {
 	private String soilType="sandy loam";	//user input, default="sandy loam"
 	private String district="South Florida";
 	private Double area=1.0;
-	private Double RD=7.62;					//user input, default=30.0
+	private Double RD=8.0;					//user input, default=30.0
 	private ArrayList<Double> WB;
 	private ArrayList<Double> SWC;			//from calculation function 
 	private ArrayList<Double> ET;			//from calculation function

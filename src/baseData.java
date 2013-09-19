@@ -145,7 +145,7 @@ public class baseData {
 		
 		try { 
 			
-			File csv = new File("time-base-sws.csv");  
+			File csv = new File("time-base-trial.csv");  
 
 			BufferedReader br = new BufferedReader(new FileReader(csv)); 
 		    br.readLine();  

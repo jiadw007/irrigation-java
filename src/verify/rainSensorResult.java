@@ -33,6 +33,11 @@ public class rainSensorResult {
 	private ArrayList<Double> PERC;
 	private ArrayList<Double> Loss;
 	private ArrayList<Double> PerLoss;
+	private ArrayList<Double> wLostHr;
+	private ArrayList<Double> wLostDay;
+	private ArrayList<Double> iLostHr;
+	private ArrayList<Double> iLostDay;
+	
 	private String fileName;
 	
 	/**
@@ -56,6 +61,10 @@ public class rainSensorResult {
 		this.PERC=new ArrayList<Double>();
 		this.Loss=new ArrayList<Double>();
 		this.PerLoss=new ArrayList<Double>();
+		wLostHr=new ArrayList<Double>();
+		wLostDay=new ArrayList<Double>();
+		iLostHr=new ArrayList<Double>();
+		iLostDay=new ArrayList<Double>();
 		this.fileName=fileName;
 		try{
 			
