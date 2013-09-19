@@ -33,6 +33,11 @@ public class soilWaterResult {
 	private ArrayList<Double> PERC;
 	private ArrayList<Double> Loss;
 	private ArrayList<Double> PerLoss;
+	private ArrayList<Double> wLostHr;
+	private ArrayList<Double> wLostDay;
+	private ArrayList<Double> iLostHr;
+	private ArrayList<Double> iLostDay;
+	
 	private String fileName;
 	
 	/**
@@ -54,11 +59,16 @@ public class soilWaterResult {
 		this.PERC=new ArrayList<Double>();
 		this.Loss=new ArrayList<Double>();
 		this.PerLoss=new ArrayList<Double>();
+		wLostHr=new ArrayList<Double>();
+		wLostDay=new ArrayList<Double>();
+		iLostHr=new ArrayList<Double>();
+		iLostDay=new ArrayList<Double>();
 		this.fileName=Filename;
+		System.out.println(fileName);
 		try{
 			
 			/*import jxl, get xls object*/
-			InputStream is=new FileInputStream(fileName);
+			InputStream is=new FileInputStream(this.fileName);
 			jxl.Workbook rwb=Workbook.getWorkbook(is);
 			jxl.Sheet rs=rwb.getSheet(0);
 			
@@ -77,7 +87,10 @@ public class soilWaterResult {
 				this.Q.add(Double.parseDouble(cell[10].getContents()));
 				this.InF.add(Double.parseDouble(cell[11].getContents()));
 				this.PERC.add(Double.parseDouble(cell[12].getContents()));
-				
+				this.wLostHr.add(Double.parseDouble(cell[15].getContents()));
+				this.wLostDay.add(Double.parseDouble(cell[16].getContents()));
+				this.iLostHr.add(Double.parseDouble(cell[17].getContents()));
+				this.iLostDay.add(Double.parseDouble(cell[18].getContents()));
 			}
 				
 				
@@ -149,6 +162,23 @@ public class soilWaterResult {
 				}else if(Math.abs(swr.PERC.get(i)-Double.parseDouble(item[12]))>=0.001){
 					
 					System.out.println("The Data in PERC "+(i+1)+"has error");
+					
+				}else if(Math.abs(swr.wLostHr.get(i)-Double.parseDouble(item[15]))>=0.001){
+					
+					System.out.println("The Data in wLostHr "+(i+1)+"has error");
+					
+				}else if(Math.abs(swr.wLostDay.get(i)-Double.parseDouble(item[16]))>=0.001){
+					System.out.println(swr.wLostDay.get(i));
+					System.out.println(Double.parseDouble(item[16]));
+					System.out.println("The Data in wLostDay "+(i+1)+"has error");
+					
+				}else if(Math.abs(swr.iLostHr.get(i)-Double.parseDouble(item[17]))>=0.001){
+					
+					System.out.println("The Data in iLostHr "+(i+1)+"has error");
+					
+				}else if(Math.abs(swr.iLostDay.get(i)-Double.parseDouble(item[18]))>=0.001){
+					
+					System.out.println("The Data in iLostDay "+(i+1)+"has error");
 					
 				}else{
 					
