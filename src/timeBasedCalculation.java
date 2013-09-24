@@ -395,12 +395,12 @@ public class timeBasedCalculation {
 				
 				
 			}else{
-				this.delta.add(i-1,-1.0);		//we have no result for this property
-				this.F.add(i-1,-1.0);		//we have no result for this property
-				this.rateF.add(i-1,-1.0);		//we have no result for this property
-				this.Q.add(i-1,0.0);
-				this.PERC.add(i-1,0.0);
-				this.InF.add(i-1,0.0);
+				this.delta.add(-1.0);		//we have no result for this property
+				this.F.add(-1.0);		//we have no result for this property
+				this.rateF.add(-1.0);		//we have no result for this property
+				this.Q.add(0.0);
+				this.PERC.add(0.0);
+				this.InF.add(0.0);
 				
 				
 			}

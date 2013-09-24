@@ -36,6 +36,8 @@ public class timeBasedETControllerCalculation extends timeBasedCalculation{
 		AWRstep2=new ArrayList();
 		AWRstep3=new ArrayList();
 		AWR.add(0.0);
+		//AWRstep1.add(0.0);
+		//AWRstep2.add(0);
 	}
 	
 	public void calculation(){
@@ -141,19 +143,19 @@ public class timeBasedETControllerCalculation extends timeBasedCalculation{
 		
 		
 		try{
-			File csv=new File("ETContorller-result.csv");
+			File csv=new File("ETController-result.csv");
 			BufferedWriter bw=new BufferedWriter(new FileWriter(csv,false));
 			bw.write("hour"+","+"Rhr"+","+"Re"+","+"IhrSchedule"+","+"Ick1"+","+"Ick2"+","+"SWC"+","+"ET"+","+"AWRstep1"+","+"AWRstep2"+","+"AWR"+
 					 ","+"Ihret"+","+"WB"+","+"delta"+","+"F"+","+"f"+","+
-			         "Q"+","+"InF"+","+"PERC"+","+"wLostHr"+","+
+			         "Q"+","+"InF"+","+"PERC"+","+"Loss"+","+"PerLoss"+","+"wLostHr"+","+
 					 "wLostDay"+","+"iLostHr"+","+"iLostDay");
 			bw.newLine();
 			for(int i =0;i<this.AWRstep1.size();i++){
 				
 				bw.write(this.b.Hour.get(i)+","+this.b.Rhr.get(i)+","+this.Re.get(i)+","+this.b.Ihrschedule.get(i)+","+this.Ick1.get(i)+","+
-						this.Ick2.get(i)+","+this.getSWC().get(i+1)+","+this.getET().get(i)+","+this.AWRstep1.get(i)+","+this.AWRstep2.get(i)+","+this.AWR.get(i)+","+
+						this.Ick2.get(i)+","+this.getSWC().get(i+1)+","+this.getET().get(i)+","+this.AWRstep1.get(i)+","+this.AWRstep2.get(i)+","+this.AWR.get(i+1)+","+
 						this.Ihret.get(i)+","+this.getWB().get(i)+","+this.getDelta().get(i)+","+this.getF().get(i)+","+
-						this.getRateF().get(i)+","+this.getQ().get(i)+","+this.getInF().get(i)+","+this.getPERC().get(i)+","+
+						this.getRateF().get(i)+","+this.getQ().get(i)+","+this.getInF().get(i)+","+this.getPERC().get(i)+","+this.getLoss().get(i)+","+this.getPerLoss().get(i)+","
 						+this.getwLostHr().get(i)+","+this.getwLostDay().get(i)+","+this.getiLostHr().get(i)+","+this.getiLostDay().get(i));
 				bw.newLine();
 				

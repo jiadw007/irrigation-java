@@ -48,7 +48,8 @@ public class rainSensorResult {
 	public rainSensorResult(String fileName) {
 		
 		
-		
+		this.Rsum=new ArrayList<Double>();
+		this.Ihrrain=new ArrayList<Double>();
 		this.ET0=new ArrayList<Double>();
 		this.ET=new ArrayList<Double>();
 		this.WB=new ArrayList<Double>();
@@ -69,37 +70,41 @@ public class rainSensorResult {
 		try{
 			
 			/*import jxl, get xls object*/
-			InputStream is=new FileInputStream(fileName);
+			InputStream is=new FileInputStream(this.fileName);
 			jxl.Workbook rwb=Workbook.getWorkbook(is);
 			jxl.Sheet rs=rwb.getSheet(0);
 			int rowNum=rs.getRows();
+			//System.out.println(rowNum);
 			/*read data from .xls*/
 			for(int i =1;i<rowNum;i++){
-				
+				//System.out.println("read");
 				Cell[] cell=rs.getRow(i);
-				this.Rsum.add(Double.parseDouble(cell[3].getContents()));
-				this.Ihrrain.add(Double.parseDouble(cell[4].getContents()));
-				this.ET0.add(Double.parseDouble(cell[5].getContents()));
-				this.ET.add(Double.parseDouble(cell[6].getContents()));
-				this.WB.add(Double.parseDouble(cell[7].getContents()));
-				this.SWC.add(Double.parseDouble(cell[8].getContents()));
-				this.delta.add(Double.parseDouble(cell[9].getContents()));
-				this.F.add(Double.parseDouble(cell[10].getContents()));
-				this.f.add(Double.parseDouble(cell[11].getContents()));
-				this.Q.add(Double.parseDouble(cell[12].getContents()));
-				this.InF.add(Double.parseDouble(cell[13].getContents()));
-				this.PERC.add(Double.parseDouble(cell[14].getContents()));
-				
+				//System.out.println(cell[2].getContents());
+				this.Rsum.add(Double.parseDouble(cell[2].getContents()));
+				this.Ihrrain.add(Double.parseDouble(cell[3].getContents()));
+				this.ET0.add(Double.parseDouble(cell[4].getContents()));
+				this.ET.add(Double.parseDouble(cell[5].getContents()));
+				this.WB.add(Double.parseDouble(cell[6].getContents()));
+				this.SWC.add(Double.parseDouble(cell[7].getContents()));
+				this.delta.add(Double.parseDouble(cell[8].getContents()));
+				this.F.add(Double.parseDouble(cell[9].getContents()));
+				this.f.add(Double.parseDouble(cell[10].getContents()));
+				this.Q.add(Double.parseDouble(cell[11].getContents()));
+				this.InF.add(Double.parseDouble(cell[12].getContents()));
+				this.PERC.add(Double.parseDouble(cell[13].getContents()));
+				this.wLostHr.add(Double.parseDouble(cell[16].getContents()));
+				this.wLostDay.add(Double.parseDouble(cell[17].getContents()));
+				this.iLostHr.add(Double.parseDouble(cell[18].getContents()));
+				this.iLostDay.add(Double.parseDouble(cell[19].getContents()));
 			}
 				
 				
-			}catch(Exception ex){
+		}catch(Exception ex){
 				
-				ex.printStackTrace();
-			
-		}
-		
+			ex.printStackTrace();
+		}	
 	}
+		
 	/**
 	 * test function to verify result from your function
 	 * @param args
@@ -108,7 +113,7 @@ public class rainSensorResult {
 		
 		
 		/*change the value in the constructor field with the file name and path for the result file from R file*/
-		rainSensorResult rsr=new rainSensorResult("file name with path");		//The filename is important. Verify it correctly
+		rainSensorResult rsr=new rainSensorResult("sensor.xls");		//The filename is important. Verify it correctly
 		int correctCount=0;		// the total number of all correct data
 		try{
 			
@@ -121,54 +126,70 @@ public class rainSensorResult {
 				
 		    	String line= br.readLine();
 		    	String item[]=line.split(",");
-		    	if(Math.abs(rsr.Rsum.get(i)-Double.parseDouble(item[3]))>=0.001){
+		    	if(Math.abs(rsr.Rsum.get(i)-Double.parseDouble(item[2]))>=0.001){
 					
 					System.out.println("The Data in Rsum "+(i+1)+"has error");
 					
-				}else if(Math.abs(rsr.Ihrrain.get(i)-Double.parseDouble(item[4]))>=0.001){
+				}else if(Math.abs(rsr.Ihrrain.get(i)-Double.parseDouble(item[3]))>=0.001){
 					
 					System.out.println("The Data in Ihrrain "+(i+1)+"has error");
 					
-				}else if(Math.abs(rsr.ET0.get(i)-Double.parseDouble(item[5]))>=0.001){
+				}else if(Math.abs(rsr.ET0.get(i)-Double.parseDouble(item[4]))>=0.001){
 					
 					System.out.println("The Data in ET0 "+(i+1)+"has error");
 					
-				}else if(Math.abs(rsr.ET.get(i)-Double.parseDouble(item[6]))>=0.001){
+				}else if(Math.abs(rsr.ET.get(i)-Double.parseDouble(item[5]))>=0.001){
 					
 					System.out.println("The Data in ET "+(i+1)+"has error ");
 					
-				}else if(Math.abs(rsr.WB.get(i)-Double.parseDouble(item[7]))>=0.001){
+				}else if(Math.abs(rsr.WB.get(i)-Double.parseDouble(item[6]))>=0.001){
 					
 					System.out.println("The Data in WB "+(i+1)+"has error ");
 					
-				}else if(Math.abs(rsr.SWC.get(i)-Double.parseDouble(item[8]))>=0.001){
+				}else if(Math.abs(rsr.SWC.get(i)-Double.parseDouble(item[7]))>=0.1){
 					//System.out.println(rsr.SWC.get(i));
 					//System.out.println(Double.parseDouble(item[6]));
 					System.out.println("The Data in SWC "+(i+1)+"has error ");
 					
-				}else if(Math.abs(rsr.delta.get(i)-Double.parseDouble(item[9]))>=0.001){
+				}else if(Math.abs(rsr.delta.get(i)-Double.parseDouble(item[8]))>=0.001){
 					
 					System.out.println("The Data in DELTA "+(i+1)+"has error");
 					
-				}else if(Math.abs(rsr.F.get(i)-Double.parseDouble(item[10]))>=0.001){
+				}else if(Math.abs(rsr.F.get(i)-Double.parseDouble(item[9]))>=0.001){
 					
 					System.out.println("The Data in F "+(i+1)+"has error");
 					
-				}else if(Math.abs(rsr.f.get(i)-Double.parseDouble(item[11]))>=0.001){
+				}else if(Math.abs(rsr.f.get(i)-Double.parseDouble(item[10]))>=0.001){
 					
 					System.out.println("The Data in f "+(i+1)+"has error");
 					
-				}else if(Math.abs(rsr.Q.get(i)-Double.parseDouble(item[12]))>=0.001){
+				}else if(Math.abs(rsr.Q.get(i)-Double.parseDouble(item[11]))>=0.001){
 					
 					System.out.println("The Data in Q "+(i+1)+"has error");
 					
-				}else if(Math.abs(rsr.InF.get(i)-Double.parseDouble(item[13]))>=0.001){
+				}else if(Math.abs(rsr.InF.get(i)-Double.parseDouble(item[12]))>=0.001){
 					
 					System.out.println("The Data in InF "+(i+1)+"has error");
 					
-				}else if(Math.abs(rsr.PERC.get(i)-Double.parseDouble(item[14]))>=0.001){
+				}else if(Math.abs(rsr.PERC.get(i)-Double.parseDouble(item[13]))>=0.001){
 					
 					System.out.println("The Data in PERC "+(i+1)+"has error");
+					
+				}else if(Math.abs(rsr.wLostHr.get(i)-Double.parseDouble(item[16]))>=0.001){
+					
+					System.out.println("The Data in wLostHr "+(i+1)+"has error");
+					
+				}else if(Math.abs(rsr.wLostDay.get(i)-Double.parseDouble(item[17]))>=0.001){
+					
+					System.out.println("The Data in wLostDay "+(i+1)+"has error");
+					
+				}else if(Math.abs(rsr.iLostHr.get(i)-Double.parseDouble(item[18]))>=0.001){
+					
+					System.out.println("The Data in iLostHr "+(i+1)+"has error");
+					
+				}else if(Math.abs(rsr.iLostDay.get(i)-Double.parseDouble(item[19]))>=0.001){
+					
+					System.out.println("The Data in iLostDay "+(i+1)+"has error");
 					
 				}else{
 					
